@@ -58,4 +58,23 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("Grounded", false);
         }
     }
+    public void Crouch(InputAction.CallbackContext context)
+    {
+        if (groundSensor.IsGrounded() == true)
+        {
+            Debug.Log("Crouch");
+            if (context.performed)
+            {
+                animator.SetBool("Crouching", true);
+            }
+            else if (context.canceled)
+            {
+                animator.SetBool("Crouching", false);
+            }
+        }
+    }
+    public void Die()
+    {
+        animator.SetTrigger("Death");
+    }
 }

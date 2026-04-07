@@ -4,7 +4,7 @@ public abstract class BasePanel : MonoBehaviour
 {
     public void RegisterPanel()
     {
-        //PanelManager.Instance.RegisterPanel(this);
+        UIManager.Instance.RegisterPanel(this);
     }
     public virtual void OpenPanel()
     {
