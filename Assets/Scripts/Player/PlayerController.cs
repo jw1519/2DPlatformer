@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
     }
     private void Update()
     {
-        rb.velocity = new Vector2 (horizontalMovement * movementSpeed, rb.velocity.y);
+        rb.linearVelocity = new Vector2 (horizontalMovement * movementSpeed, rb.linearVelocity.y);
     }
     public void Move(InputAction.CallbackContext context)
     {
@@ -35,11 +35,11 @@ public class PlayerController : MonoBehaviour
         {
             if (context.performed)
             {
-                rb.velocity = new Vector2(rb.velocity.x, jumpPower);
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpPower);
             }
             else if (context.canceled)
             {
-                rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * 0.5f);
             }
         }
     }
