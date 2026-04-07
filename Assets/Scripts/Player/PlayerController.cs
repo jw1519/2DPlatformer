@@ -5,7 +5,9 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    public Rigidbody2D rb;
+    Rigidbody2D rb;
+    Animator animator;
+    GroundSensor groundSensor;
     public int movementSpeed;
     public int jumpPower;
 
@@ -13,25 +15,37 @@ public class PlayerController : MonoBehaviour
 
     [Header("GroundCheck")]
     public Transform GroundCheckPos;
-    public Vector2 groundCheckSize = Vector2.one;
-    public LayerMask groundLayer;
-
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        groundSensor = GroundCheckPos.GetComponent<GroundSensor>();
     }
     private void Update()
     {
         rb.linearVelocity = new Vector2 (horizontalMovement * movementSpeed, rb.linearVelocity.y);
     }
+    public void Attack(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            animator.SetTrigger("Attack");
+        }
+    }
     public void Move(InputAction.CallbackContext context)
     {
         horizontalMovement = context.ReadValue<Vector2>().x;
+        if (horizontalMovement != 0)
+        {
+            animator.SetBool("Running", true);
+        }
+        else
+            animator.SetBool("Running", false);
     }
     public void Jump(InputAction.CallbackContext context)
     {
-        if (isGrounded() == true)
+        if (groundSensor.IsGrounded() == true)
         {
             if (context.performed)
             {
@@ -41,19 +55,7 @@ public class PlayerController : MonoBehaviour
             {
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * 0.5f);
             }
+            animator.SetBool("Grounded", false);
         }
-    }
-    private bool isGrounded()
-    {
-        if (Physics2D.OverlapBox(GroundCheckPos.position, groundCheckSize, 0, groundLayer)) 
-        {
-            return true;
-        }
-        return false;
-    }
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireCube(GroundCheckPos.position, groundCheckSize);
     }
 }
