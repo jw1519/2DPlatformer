@@ -11,7 +11,7 @@ public class InventorySlots : MonoBehaviour
     public TextMeshProUGUI quantityText;
     private void Awake()
     {
-        //ClearSlot();
+        ClearSlot();
     }
 
     public void UpdateQuantity(int amount)

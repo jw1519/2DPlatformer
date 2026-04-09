@@ -9,12 +9,19 @@ public class InventoryPanel : BasePanel
 
     public GameObject itemSlotPrefab;
     public int maxSlots = 20;
+    public int amountSlotsInRow = 6;
 
-    private void Awake()
+    public override void Start()
     {
+        base.Start();
         for (int i = 0; i < maxSlots; i++)
         {
-            Instantiate(itemSlotPrefab, transform);
+            InventorySlots instance = Instantiate(itemSlotPrefab, transform).GetComponent<InventorySlots>();
+            itemSlots.Add(instance);
+            if (i < amountSlotsInRow)
+            {
+                instance.transform.SetParent(UIManager.Instance.registeredPanels.Find(p => p.name == "HotBar").GetComponent<Transform>());
+            }
         }
     }
 

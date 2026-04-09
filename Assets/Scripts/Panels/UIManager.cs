@@ -50,7 +50,7 @@ public class UIManager : MonoBehaviour
             Debug.LogWarning($"Panel with name {panelName} not found.");
         }
     }
-    public void CloseAllPaenls()
+    public void CloseAllPanels()
     {
         foreach (BasePanel panel in registeredPanels)
         {
