@@ -20,6 +20,7 @@ public enum ItemType
 {
     Weapon,
     Armor,
+    Tool,
     Consumable,
     QuestItem,
     Placeable,

@@ -9,6 +9,7 @@ public class BuildingSystem : MonoBehaviour
     [SerializeField] Tilemap mainTileMap;
     [SerializeField] Tilemap tempTileMap;
 
+    Vector3Int playerPosition;
     Vector3Int highlightedTilePos;
     bool isHighlighted;
     private Vector3Int GetMouseOnGridPosition()
@@ -20,27 +21,62 @@ public class BuildingSystem : MonoBehaviour
     }
     private void Update()
     {
+        playerPosition = mainTileMap.WorldToCell(transform.position);
         if (item != null)
         {
             HighlightTile(item);
         }
     }
-    private void HighlightTile(BaseItem tile)
+    private void HighlightTile(BaseItem currenTile)
     {
         Vector3Int mouseGridPosition = GetMouseOnGridPosition();
         if (highlightedTilePos != mouseGridPosition)
         {
             tempTileMap.SetTile(highlightedTilePos, tile: null);
+
+            TileBase tile = mainTileMap.GetTile(mouseGridPosition);
+            if (InRange(playerPosition, mouseGridPosition, currenTile.range))
+            {
+                if (CheckItemType(mainTileMap.GetTile<BaseTile>(mouseGridPosition), currenTile))
+                {
+                    tempTileMap.SetTile(mouseGridPosition, highlightTile);
+                    highlightedTilePos = mouseGridPosition;
+                    isHighlighted = true;
+                }
+                else
+                {
+                    isHighlighted = false;
+                }
+            }
+
+        }
+    }
+    private bool InRange(Vector3Int playerPosition, Vector3Int target, Vector2Int range)
+    {
+        Vector3Int distance = playerPosition - target;
+        if (Mathf.Abs(distance.x) <= range.x || Mathf.Abs(distance.y) <= range.y)
+        {
+            return true;
+        }
+        return false;
+    }
+    public bool CheckItemType(BaseTile tile, BaseItem currentItem)
+    {
+        if (currentItem.itemType == ItemType.Placeable)
+        {
+            if (!tile)
+                return false;
+        }
+        else if (currentItem.itemType == ItemType.Tool)
+        {
             if (tile)
             {
-                tempTileMap.SetTile(mouseGridPosition, highlightTile);
-                highlightedTilePos = mouseGridPosition;
-                isHighlighted = true;
-            }
-            else
-            {
-                isHighlighted = false;
+                if (tile.item.actionType == currentItem.actionType)
+                {
+                    return true;
+                }
             }
         }
+        return false;
     }
 }
