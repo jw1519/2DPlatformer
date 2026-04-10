@@ -1,11 +1,13 @@
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 [CreateAssetMenu(fileName = "New Item", menuName = "Inventory/Item")]
 public class BaseItem : ScriptableObject
 {
     public string itemName;
     public string description;
-    public Sprite icon;
+    public TileBase tile;
+    public Sprite itemSprite;
     public ItemType itemType;
     public ActionType actionType;
     public Vector2Int range = new Vector2Int(5, 4); // Default range for actions

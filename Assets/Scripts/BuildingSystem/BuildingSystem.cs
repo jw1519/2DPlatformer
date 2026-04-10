@@ -62,6 +62,7 @@ public class BuildingSystem : MonoBehaviour
     }
     public bool CheckItemType(BaseTile tile, BaseItem currentItem)
     {
+        Debug.Log(tile);
         if (currentItem.itemType == ItemType.Placeable)
         {
             if (!tile)

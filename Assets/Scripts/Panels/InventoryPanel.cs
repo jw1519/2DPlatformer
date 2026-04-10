@@ -69,6 +69,7 @@ public class InventoryPanel : BasePanel
     {
         foreach (var slot in itemSlots)
         {
+            Debug.Log(slot.item);
             if (slot.item == null)
             {
                 return slot;

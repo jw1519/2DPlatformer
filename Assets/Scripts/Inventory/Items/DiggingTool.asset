@@ -9,13 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1eacf546f5ab30840ad5564b537586fb, type: 3}
-  m_Name: Digging Block
+  m_Script: {fileID: 11500000, guid: 3a949400594d77d4da6158db366e8610, type: 3}
+  m_Name: DiggingTool
   m_EditorClassIdentifier: 
-  itemName: 
+  itemName: Shovel
   description: 
-  tile: {fileID: 11400000, guid: 4294405348bb42347b6e647c827eab1d, type: 2}
-  itemSprite: {fileID: -1766307359, guid: 5fe5454ec8605de43809133b020d1b69, type: 3}
-  itemType: 5
+  tile: {fileID: 0}
+  itemSprite: {fileID: 21300020, guid: f2ed27d6c1c3ccc48959bcca269d88f0, type: 3}
+  itemType: 2
   actionType: 0
   range: {x: 5, y: 4}
