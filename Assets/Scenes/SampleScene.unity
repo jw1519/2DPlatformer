@@ -769,6 +769,7 @@ GameObject:
   - component: {fileID: 37685308}
   - component: {fileID: 37685310}
   - component: {fileID: 37685311}
+  - component: {fileID: 37685312}
   m_Layer: 0
   m_Name: player
   m_TagString: Player
@@ -1079,7 +1080,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 37685303}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 72b6499f438a25349b8081f2c283da56, type: 3}
   m_Name: 
@@ -1088,6 +1089,21 @@ MonoBehaviour:
   highlightTile: {fileID: 11400000, guid: 8d7a2e70a557b18409e0cb67a1164e29, type: 2}
   mainTileMap: {fileID: 14300870}
   tempTileMap: {fileID: 842633136}
+--- !u!114 &37685312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 37685303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5eb52d04fd874643ac016b00880b65c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
+  maxHealth: 100
+  damage: 0
 --- !u!1 &218644468
 GameObject:
   m_ObjectHideFlags: 0

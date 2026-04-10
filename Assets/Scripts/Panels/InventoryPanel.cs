@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class InventoryPanel : BasePanel
 {
-    public List<BaseItem> items;
     public List<InventorySlots> itemSlots;
 
     public GameObject itemSlotPrefab;
@@ -87,5 +86,20 @@ public class InventoryPanel : BasePanel
             }
         }
         return null;
+    }
+    public void SwapSlots(int a, int b)
+    {
+        if (a == b) return; // No need to swap if the same slot is selected
+        if (a < 0 || a >= itemSlots.Count || b < 0 || b >= itemSlots.Count)
+        {
+            Debug.Log("Invalid slot indices for swapping!");
+            return;
+        }
+        InventorySlots temp = itemSlots[a];
+        itemSlots[a] = itemSlots[b];
+        itemSlots[b] = temp;
+
+        itemSlots[a].UpdateQuantity(itemSlots[a].quantity); // Update the UI after swapping
+        itemSlots[b].UpdateQuantity(itemSlots[b].quantity); // Update the UI after swapping
     }
 }

@@ -5,9 +5,17 @@ public class Player : MonoBehaviour
     public int health;
     public int maxHealth;
     public int damage;
+
+    PlayerStatsPanel playerStatsPanel;
     private void Start()
     {
         health = maxHealth;
+        playerStatsPanel = UIManager.Instance.registeredPanels.Find(panel => panel is PlayerStatsPanel) as PlayerStatsPanel;
+        if (playerStatsPanel != null)
+        {
+            playerStatsPanel.SetMaxHealth(maxHealth);
+            playerStatsPanel.UpdateHealth(health);
+        }
     }
     public void TakeDamage(int damage)
     {
@@ -16,6 +24,7 @@ public class Player : MonoBehaviour
         {
             Die();
         }
+        playerStatsPanel.UpdateHealth(health);
     }
     private void Die()
     {
