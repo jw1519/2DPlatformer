@@ -10,6 +10,7 @@ public class InventorySlots : MonoBehaviour, IDropHandler
 
     public Image itemImage;
     public TextMeshProUGUI quantityText;
+    public Image dragIcon;
     private void Awake()
     {
         ClearSlot();
@@ -24,50 +25,36 @@ public class InventorySlots : MonoBehaviour, IDropHandler
             ClearSlot();
         }
     }
+    public void SetItem(BaseItem newItem)
+    {
+        item = newItem;
+        if (item.itemSprite != null)
+        {
+            itemImage.sprite = item.itemSprite;
+            dragIcon.sprite = item.itemSprite;
+        }
+    }
     public void ClearSlot()
     {
         item = null;
         quantity = 0;
         quantityText.text = "";
         itemImage.sprite = null;
+        dragIcon.sprite = null;
     }
-    public void OnDrop(PointerEventData eventData) //isnt being called
+    public void OnDrop(PointerEventData eventData)
     {
         Debug.Log("OnDrop called on " + gameObject.name);
-        if (transform.childCount == 0)
+        InventorySlots newSlot = UIManager.Instance.currentDragSlot;
+        if (newSlot.item == null)
         {
-            InventorySlots newSlot = eventData.pointerEnter.GetComponent<InventorySlots>();
-            if (newSlot.item == null)
-            {
-                newSlot.item = item;
-                newSlot.UpdateQuantity(quantity);
-                ClearSlot();
-            }
-            else
-            {
-                // Swap items
-
-                //store new slot item and quantity in temp variables
-                BaseItem tempItem = newSlot.item;
-                int tempQuantity = newSlot.quantity;
-
-                //store this slot item and quantity in new slot
-                BaseItem currentItem = item;
-                int currentQuantity = quantity;
-
-                if (tempItem != null)
-                {
-                    ClearSlot();
-                    item = tempItem;
-                    UpdateQuantity(tempQuantity);
-                }
-                if (currentItem != null)
-                {
-                    newSlot.ClearSlot();
-                    newSlot.item = currentItem;
-                    newSlot.UpdateQuantity(currentQuantity);
-                }
-            }
+            newSlot.SetItem(item);
+            newSlot.UpdateQuantity(quantity);
+            ClearSlot();
+        }
+        else
+        {
+            UIManager.Instance.registeredPanels.Find(p => p.GetComponent<InventoryPanel>() != null)?.GetComponent<InventoryPanel>().SwapSlots(this, newSlot);
         }
     }
 

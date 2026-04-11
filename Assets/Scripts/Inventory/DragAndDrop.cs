@@ -4,62 +4,46 @@ using UnityEngine.EventSystems;
 public class DragAndDrop : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
     InventorySlots thisSlot;
+    Transform dragIcon;
     private void Start()
     {
-        thisSlot = GetComponentInParent<InventorySlots>();
+        thisSlot = GetComponent<InventorySlots>();
+        dragIcon = thisSlot.dragIcon.transform;
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
-        transform.SetParent(transform.root);
-        transform.SetAsLastSibling();
+        if (thisSlot.item == null) return; // Don't start dragging if there's no item in the slot
+        dragIcon.SetParent(transform.root);
+        dragIcon.SetAsLastSibling();
+        dragIcon.gameObject.SetActive(true);
+        UIManager.Instance.currentDragSlot = thisSlot; // Set the current dragging slot in UIManager
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        transform.position = Input.mousePosition;
+        if (thisSlot.item == null) { return; }
+        dragIcon.position = Input.mousePosition;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (thisSlot.item == null) return;
         //if mouse is over another inventory slot, swap items or move item if new slot is empty
+        //Debug.Log(eventData.pointerEnter.GetComponent<InventorySlots>()); // is null
+        //Debug.Log(eventData.pointerEnter.name);
 
-        Debug.Log(eventData.pointerEnter.GetComponent<InventorySlots>()); // is null
-        if (eventData.pointerEnter != null && eventData.pointerEnter.GetComponent<InventorySlots>() != null) //not going in the method
-        {
-            InventorySlots newSlot = eventData.pointerEnter.GetComponent<InventorySlots>();
-            if (newSlot.item == null)
-            {
-                newSlot.item = thisSlot.item;
-                newSlot.UpdateQuantity(thisSlot.quantity);
-                thisSlot.ClearSlot();
-            }
-            else
-            {
-                // Swap items
-
-                //store new slot item and quantity in temp variables
-                BaseItem tempItem = newSlot.item;
-                int tempQuantity = newSlot.quantity;
-
-                //store this slot item and quantity in new slot
-                BaseItem currentItem = thisSlot.item;
-                int currentQuantity = thisSlot.quantity;
-
-                if (tempItem != null)
-                {
-                    thisSlot.ClearSlot();
-                    thisSlot.item = tempItem;
-                    thisSlot.UpdateQuantity(tempQuantity);
-                }
-                if (currentItem != null)
-                {
-                    newSlot.ClearSlot();
-                    newSlot.item = currentItem;
-                    newSlot.UpdateQuantity(currentQuantity);
-                }
-            }
-        }
-        transform.SetParent(thisSlot.transform);
-        transform.localPosition = Vector3.zero;
+        //if (eventData.pointerEnter != null && eventData.pointerEnter.GetComponent<InventorySlots>() != null) //not going in the method
+        //{
+        //    InventorySlots newSlot = eventData.pointerEnter.GetComponent<InventorySlots>();
+        //    if (newSlot.item == null)
+        //    {
+        //        newSlot.SetItem(thisSlot.item);
+        //        newSlot.UpdateQuantity(thisSlot.quantity);
+        //        thisSlot.ClearSlot();
+        //    }
+        //}
+        dragIcon.SetParent(thisSlot.transform);
+        dragIcon.localPosition = Vector3.zero;
+        dragIcon.gameObject.SetActive(false);
     }
 }

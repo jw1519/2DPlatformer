@@ -16,6 +16,7 @@ public class InventoryPanel : BasePanel
         for (int i = 0; i < maxSlots; i++)
         {
             InventorySlots instance = Instantiate(itemSlotPrefab, transform).GetComponent<InventorySlots>();
+            instance.name = "Slot " + (i + 1);
             itemSlots.Add(instance);
             if (i < amountSlotsInRow)
             {
@@ -37,7 +38,7 @@ public class InventoryPanel : BasePanel
             inventorySlots = GetEmptySlot();
             if (inventorySlots != null)
             {
-                inventorySlots.item = item;
+                inventorySlots.SetItem(item);
                 inventorySlots.UpdateQuantity(amount);
             }
             else
@@ -87,19 +88,21 @@ public class InventoryPanel : BasePanel
         }
         return null;
     }
-    public void SwapSlots(int a, int b)
+    public void SwapSlots(InventorySlots slotA, InventorySlots slotB)
     {
-        if (a == b) return; // No need to swap if the same slot is selected
-        if (a < 0 || a >= itemSlots.Count || b < 0 || b >= itemSlots.Count)
-        {
-            Debug.Log("Invalid slot indices for swapping!");
-            return;
-        }
-        InventorySlots temp = itemSlots[a];
-        itemSlots[a] = itemSlots[b];
-        itemSlots[b] = temp;
 
-        itemSlots[a].UpdateQuantity(itemSlots[a].quantity); // Update the UI after swapping
-        itemSlots[b].UpdateQuantity(itemSlots[b].quantity); // Update the UI after swapping
+        if (slotA == slotB) return; // No need to swap if the same slot is selected
+
+        Debug.Log(slotA);
+                Debug.Log(slotB);
+
+        InventorySlots temp = slotA;
+        slotA.ClearSlot();
+        slotA.SetItem(slotB.item);
+        slotA.UpdateQuantity(slotB.quantity);
+
+        slotB.ClearSlot();
+        slotB.SetItem(temp.item);
+        slotB.UpdateQuantity(temp.quantity);
     }
 }

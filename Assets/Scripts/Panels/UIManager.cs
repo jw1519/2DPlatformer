@@ -6,6 +6,7 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance { get; private set; }
 
     public List<BasePanel> registeredPanels;
+    public InventorySlots currentDragSlot;
 
     private void Awake()
     {
