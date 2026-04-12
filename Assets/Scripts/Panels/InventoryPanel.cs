@@ -23,6 +23,18 @@ public class InventoryPanel : BasePanel
                 instance.transform.SetParent(UIManager.Instance.registeredPanels.Find(p => p.name == "HotBar").GetComponent<Transform>());
             }
         }
+        ClosePanel();
+    }
+    public void OpenPanelButton()
+    {
+        if (gameObject.activeSelf)
+        {
+            ClosePanel();
+        }
+        else
+        {
+            OpenPanel();
+        }
     }
 
     public void AddItem(BaseItem item, int amount = 1)

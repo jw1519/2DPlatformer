@@ -45,6 +45,8 @@ public class InventorySlots : MonoBehaviour, IDropHandler
     public void OnDrop(PointerEventData eventData)
     {
         InventorySlots newSlot = UIManager.Instance.currentDragSlot;
+        if (newSlot == null) return;
+
         if (newSlot.item == null)
         {
             newSlot.SetItem(item);
