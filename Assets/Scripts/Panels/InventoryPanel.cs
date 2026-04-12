@@ -90,19 +90,36 @@ public class InventoryPanel : BasePanel
     }
     public void SwapSlots(InventorySlots slotA, InventorySlots slotB)
     {
-
+        if (slotA == null || slotB == null) return; // Ensure both slots are valid
+        if (slotA.item == null && slotB.item == null) return; // No need to swap if both slots are empty
         if (slotA == slotB) return; // No need to swap if the same slot is selected
 
         Debug.Log(slotA);
-                Debug.Log(slotB);
+        Debug.Log(slotB);
+        if (slotA.item == null)
+        {
+            slotA.ClearSlot();
+            slotA.SetItem(slotB.item);
+            slotA.UpdateQuantity(slotB.quantity);
+            slotB.ClearSlot();
+        }
+        else if (slotB.item == null)
+        {
+            slotB.ClearSlot();
+            slotB.SetItem(slotA.item);
+            slotB.UpdateQuantity(slotA.quantity);
+            slotA.ClearSlot();
+        }
+        else
+        {
+            InventorySlots temp = slotA;
+            slotA.ClearSlot();
+            slotA.SetItem(slotB.item);
+            slotA.UpdateQuantity(slotB.quantity);
 
-        InventorySlots temp = slotA;
-        slotA.ClearSlot();
-        slotA.SetItem(slotB.item);
-        slotA.UpdateQuantity(slotB.quantity);
-
-        slotB.ClearSlot();
-        slotB.SetItem(temp.item);
-        slotB.UpdateQuantity(temp.quantity);
+            slotB.ClearSlot();
+            slotB.SetItem(temp.item);
+            slotB.UpdateQuantity(temp.quantity);
+        }
     }
 }

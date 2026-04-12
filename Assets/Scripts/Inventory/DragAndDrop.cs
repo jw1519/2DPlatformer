@@ -27,21 +27,6 @@ public class DragAndDrop : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (thisSlot.item == null) return;
-        //if mouse is over another inventory slot, swap items or move item if new slot is empty
-        //Debug.Log(eventData.pointerEnter.GetComponent<InventorySlots>()); // is null
-        //Debug.Log(eventData.pointerEnter.name);
-
-        //if (eventData.pointerEnter != null && eventData.pointerEnter.GetComponent<InventorySlots>() != null) //not going in the method
-        //{
-        //    InventorySlots newSlot = eventData.pointerEnter.GetComponent<InventorySlots>();
-        //    if (newSlot.item == null)
-        //    {
-        //        newSlot.SetItem(thisSlot.item);
-        //        newSlot.UpdateQuantity(thisSlot.quantity);
-        //        thisSlot.ClearSlot();
-        //    }
-        //}
         dragIcon.SetParent(thisSlot.transform);
         dragIcon.localPosition = Vector3.zero;
         dragIcon.gameObject.SetActive(false);
