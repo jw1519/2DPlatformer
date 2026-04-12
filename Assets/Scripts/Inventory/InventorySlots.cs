@@ -44,7 +44,6 @@ public class InventorySlots : MonoBehaviour, IDropHandler
     }
     public void OnDrop(PointerEventData eventData)
     {
-        Debug.Log("OnDrop called on " + gameObject.name);
         InventorySlots newSlot = UIManager.Instance.currentDragSlot;
         if (newSlot.item == null)
         {

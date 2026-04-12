@@ -94,8 +94,6 @@ public class InventoryPanel : BasePanel
         if (slotA.item == null && slotB.item == null) return; // No need to swap if both slots are empty
         if (slotA == slotB) return; // No need to swap if the same slot is selected
 
-        Debug.Log(slotA.item);
-        Debug.Log(slotB.item);
         if (slotA.item == null)
         {
             slotA.ClearSlot();
