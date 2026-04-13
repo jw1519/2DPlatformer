@@ -25,7 +25,7 @@ public enum ItemType
     Tool,
     Consumable,
     QuestItem,
-    Placeable,
+    BuildingBlock,
     Miscellaneous
 }
 public enum ActionType

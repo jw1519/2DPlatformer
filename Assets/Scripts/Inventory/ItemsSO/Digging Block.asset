@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1eacf546f5ab30840ad5564b537586fb, type: 3}
   m_Name: Digging Block
   m_EditorClassIdentifier: 
-  itemName: 
+  itemName: Dirt
   description: 
   tile: {fileID: 11400000, guid: 4294405348bb42347b6e647c827eab1d, type: 2}
   itemSprite: {fileID: -1766307359, guid: 5fe5454ec8605de43809133b020d1b69, type: 3}

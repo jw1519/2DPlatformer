@@ -10,19 +10,22 @@ public class InventoryPanel : BasePanel
     public int maxSlots = 20;
     public int amountSlotsInRow = 6;
 
+    public InventorySlots selectedSlot;
+
     public override void Start()
     {
         base.Start();
         for (int i = 0; i < maxSlots; i++)
         {
             InventorySlots instance = Instantiate(itemSlotPrefab, transform).GetComponent<InventorySlots>();
-            instance.name = "Slot " + (i + 1);
+            instance.name = (i + 1).ToString();
             itemSlots.Add(instance);
             if (i < amountSlotsInRow)
             {
                 instance.transform.SetParent(UIManager.Instance.registeredPanels.Find(p => p.name == "HotBar").GetComponent<Transform>());
             }
         }
+        selectedSlot = itemSlots[0];
         ClosePanel();
     }
     public void OpenPanelButton()
@@ -99,6 +102,11 @@ public class InventoryPanel : BasePanel
             }
         }
         return null;
+    }
+    public void SelectSlot(int slotIndex)
+    {
+        if (slotIndex < 0 || slotIndex >= itemSlots.Count) return; // Ensure the index is within bounds
+        selectedSlot = itemSlots[slotIndex];
     }
     public void SwapSlots(InventorySlots slotA, InventorySlots slotB)
     {
