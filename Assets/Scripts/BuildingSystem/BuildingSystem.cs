@@ -62,11 +62,10 @@ public class BuildingSystem : MonoBehaviour
     }
     public bool CheckItemType(BaseTile tile, BaseItem currentItem)
     {
-        Debug.Log(tile);
         if (currentItem.itemType == ItemType.BuildingBlock)
         {
             if (!tile)
-                return false;
+                return true;
         }
         else if (currentItem.itemType == ItemType.Tool)
         {
