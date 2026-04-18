@@ -1,6 +1,6 @@
+using NUnit.Framework;
 using UnityEngine;
 
-public class HotBar : BasePanel
+public class HotBarPanel : BasePanel
 {
-
 }

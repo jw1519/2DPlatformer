@@ -11,6 +11,7 @@ public class InventorySlots : MonoBehaviour, IDropHandler
     public Image itemImage;
     public TextMeshProUGUI quantityText;
     public Image dragIcon;
+    public bool isHotBarSlot = false;
     private void Awake()
     {
         ClearSlot();

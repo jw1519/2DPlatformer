@@ -9,6 +9,8 @@ public class BuildingSystem : MonoBehaviour
     [SerializeField] Tilemap mainTileMap;
     [SerializeField] Tilemap tempTileMap;
 
+    public GameObject itemDropPrefab;
+
     Vector3Int playerPosition;
     Vector3Int highlightedTilePos;
     bool isHighlighted;
@@ -26,6 +28,18 @@ public class BuildingSystem : MonoBehaviour
         {
             HighlightTile(item);
         }
+        if (Input.GetMouseButtonDown(0) && isHighlighted)
+        {
+            if (item.itemType == ItemType.BuildingBlock)
+            {
+                Build(highlightedTilePos, item);
+            }
+            else if (item.itemType == ItemType.Tool)
+            {
+                Destroy(highlightedTilePos);
+            }
+        }
+
     }
     private void HighlightTile(BaseItem currenTile)
     {
@@ -78,5 +92,30 @@ public class BuildingSystem : MonoBehaviour
             }
         }
         return false;
+    }
+
+    public void Build(Vector3Int position, BaseItem itemToBuild)
+    {
+        mainTileMap.SetTile(position, tile: null);
+        isHighlighted = false;
+
+        InventoryPanel inventory = UIManager.Instance.registeredPanels.Find(p => p.name == "InventoryPanel").GetComponent<InventoryPanel>();
+        if (inventory != null)
+        {
+            inventory.RemoveItem(itemToBuild);
+            mainTileMap.SetTile(position, itemToBuild.tile);
+        }
+    }
+    public void Destroy(Vector3Int position)
+    {
+        tempTileMap.SetTile(position, tile: null);
+        isHighlighted = false;
+
+        BaseTile tile = mainTileMap.GetTile<BaseTile>(position);
+        mainTileMap.SetTile(position, tile: null);
+
+        Vector3 pos = mainTileMap.CellToWorld(position);
+        GameObject itemDrop = Instantiate(itemDropPrefab, pos, Quaternion.identity);
+        itemDrop.GetComponent<ItemDrop>().SetItem(tile.item);
     }
 }

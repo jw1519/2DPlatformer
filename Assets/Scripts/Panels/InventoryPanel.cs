@@ -23,7 +23,10 @@ public class InventoryPanel : BasePanel
             if (i < amountSlotsInRow)
             {
                 instance.transform.SetParent(UIManager.Instance.registeredPanels.Find(p => p.name == "HotBar").GetComponent<Transform>());
+                instance.isHotBarSlot = true;
             }
+            else
+                instance.isHotBarSlot = false;
         }
         selectedSlot = itemSlots[0];
         ClosePanel();
@@ -60,6 +63,26 @@ public class InventoryPanel : BasePanel
             {
                 Debug.Log("No empty slots available!");
                 return;
+            }
+        }
+    }
+    public bool CanAddItem(BaseItem item, int amount = 1)
+    {
+        InventorySlots inventorySlots = GetSlotWithItem(item);
+        if (inventorySlots != null)
+        {
+            return true;
+        }
+        else
+        {
+            inventorySlots = GetEmptySlot();
+            if (inventorySlots != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }
