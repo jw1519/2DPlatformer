@@ -21,6 +21,16 @@ public class BuildingSystem : MonoBehaviour
         mouseGridPosition.z = 0;
         return mouseGridPosition;
     }
+    public void SetCurrentItem(BaseItem newItem)
+    {
+        item = newItem;
+    }
+    public void ClearCurrentItem()
+    {
+        item = null;
+        tempTileMap.SetTile(highlightedTilePos, tile: null);
+        isHighlighted = false;
+    }
     private void Update()
     {
         playerPosition = mainTileMap.WorldToCell(transform.position);
@@ -112,6 +122,14 @@ public class BuildingSystem : MonoBehaviour
         isHighlighted = false;
 
         BaseTile tile = mainTileMap.GetTile<BaseTile>(position);
+
+        Debug.Log(tile.item.power + " " + item.power);
+        if (tile.item.power > item.power)
+        {
+            Debug.Log("Tile is too strong to destroy with this tool.");
+            return;
+        }
+
         mainTileMap.SetTile(position, tile: null);
 
         Vector3 pos = mainTileMap.CellToWorld(position);

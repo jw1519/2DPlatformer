@@ -296,7 +296,7 @@ MonoBehaviour:
     - {x: -1, y: 1, z: 0}
     - {x: -1, y: 0, z: 0}
     - {x: -1, y: -1, z: 0}
-    - {x: 0, y: -1, z: 0}
     - {x: 1, y: -1, z: 0}
+    - {x: 0, y: -1, z: 0}
     m_RuleTransform: 0
   item: {fileID: 11400000, guid: 1b127cc932ad6044394ee7728077af65, type: 2}

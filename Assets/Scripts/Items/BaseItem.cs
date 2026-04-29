@@ -11,7 +11,7 @@ public class BaseItem : ScriptableObject
     public ItemType itemType;
     public ActionType actionType;
     public Vector2Int range = new Vector2Int(5, 4); // Default range for actions
-
+    public int power = 1;
     public virtual void UseItem()
     {
         Debug.Log($"Using {itemName}");

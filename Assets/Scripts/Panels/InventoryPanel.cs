@@ -22,7 +22,8 @@ public class InventoryPanel : BasePanel
             itemSlots.Add(instance);
             if (i < amountSlotsInRow)
             {
-                instance.transform.SetParent(UIManager.Instance.registeredPanels.Find(p => p.name == "HotBar").GetComponent<Transform>());
+                //instance.transform.SetParent(UIManager.Instance.registeredPanels.Find(p => p.name == "HotBar").GetComponent<Transform>());
+                UIManager.Instance.registeredPanels.Find(p => p.name == "HotBar").GetComponent<HotBarPanel>().AddSlot(instance);
                 instance.isHotBarSlot = true;
             }
             else
@@ -95,6 +96,7 @@ public class InventoryPanel : BasePanel
             if (inventorySlots.quantity <= 0)
             {
                 inventorySlots.ClearSlot();
+                GameObject.FindGameObjectWithTag("Player").GetComponent<BuildingSystem>().ClearCurrentItem();
             }
         }
         else
